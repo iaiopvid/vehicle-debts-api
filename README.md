@@ -598,4 +598,12 @@ O principal objetivo deste projeto foi demonstrar:
 
 Mesmo sendo um projeto pequeno, a estrutura foi desenhada para suportar crescimento sem gerar acoplamento excessivo ou complexidade prematura.
 
+## Observação sobre parcelamento
+
+Os valores de parcelamento foram implementados conforme a fórmula explicitamente descrita no desafio:
+
+valor_total * (1 + 0.025)^n / n
+
+Os valores obtidos diferem ligeiramente dos exemplos fornecidos no enunciado, indicando possível inconsistência entre fórmula e exemplos esperados.
+
 ---

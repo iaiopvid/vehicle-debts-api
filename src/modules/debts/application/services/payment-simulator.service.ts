@@ -12,16 +12,6 @@ export class PaymentSimulatorService {
       cartao_credito: {
         parcelas: this.calculateInstallments(baseValue),
       },
-      // cartao_credito: {
-      //   parcelas: [1, 6, 12].map((n) => ({
-      //     quantidade: n,
-      //     valor_parcela: Number(
-      //       (
-      //         (baseValue * Math.pow(1.025, n)) / n
-      //       ).toFixed(2),
-      //     ),
-      //   })),
-      // },
     };
   }
 
@@ -31,12 +21,6 @@ export class PaymentSimulatorService {
     const monthlyRate = 0.025;
 
     for (const n of counts) {
-      // let valorParcela: number;
-      // if (n === 1) {
-      //   valorParcela = valorBase;
-      // } else {
-      //   valorParcela = (valorBase * Math.pow(1 + monthlyRate, n)) / n;
-      // }
       const valorParcela = n === 1
         ? valorBase
         : (valorBase * Math.pow(1 + monthlyRate, n)) / n;
