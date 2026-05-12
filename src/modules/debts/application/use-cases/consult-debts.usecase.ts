@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InterestCalculatorService } from '../services/interest-calculator.service';
 import { PaymentSimulatorService } from '../services/payment-simulator.service';
 import { ProviderFallbackService } from '../services/provider-fallback.service';
+import { ConsultDebtsResponseDto } from './dto/consult-debts-response.dto';
+import { PaymentType } from './enums/debt-type.enum';
 
 @Injectable()
 export class ConsultDebtsUseCase {
@@ -12,7 +14,7 @@ export class ConsultDebtsUseCase {
     private readonly paymentSimulator: PaymentSimulatorService,
   ) { }
 
-  async execute(plate: string) {
+  async execute(plate: string): Promise<ConsultDebtsResponseDto> {
     const debts = await this.providerFallback.getDebts(plate);
 
     const updatedDebts = debts.map((debt) =>
@@ -37,7 +39,6 @@ export class ConsultDebtsUseCase {
 
     return {
       placa: plate,
-
       debitos: updatedDebts.map((debt) => ({
         tipo: debt.type,
         valor_original: debt.originalAmount,
@@ -45,26 +46,24 @@ export class ConsultDebtsUseCase {
         vencimento: debt.dueDate,
         dias_atraso: debt.delayDays,
       })),
-
       resumo: {
         total_original: Number(totalOriginal.toFixed(2)),
         total_atualizado: Number(totalUpdated.toFixed(2)),
       },
-
       pagamentos: {
         opcoes: [
           {
-            tipo: 'TOTAL',
+            tipo: PaymentType.TOTAL,
             valor_base: totalUpdated,
             ...this.paymentSimulator.simulate(totalUpdated),
           },
           {
-            tipo: 'SOMENTE_IPVA',
+            tipo: PaymentType.SOMENTE_IPVA,
             valor_base: ipvaTotal,
             ...this.paymentSimulator.simulate(ipvaTotal),
           },
           {
-            tipo: 'SOMENTE_MULTAS',
+            tipo: PaymentType.SOMENTE_MULTAS,
             valor_base: multaTotal,
             ...this.paymentSimulator.simulate(multaTotal),
           },
