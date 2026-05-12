@@ -3,6 +3,7 @@ import { DebtsController } from './debts.controller';
 import { ConsultDebtsUseCase } from '../application/use-cases/consult-debts.usecase';
 import { ConsultDebtsDto } from './dto/consult-debts.dto';
 import { BadRequestException } from '@nestjs/common';
+import { DebtType, PaymentType } from '../application/use-cases/enums/debt-type.enum';
 
 describe('DebtsController', () => {
   let controller: DebtsController;
@@ -18,19 +19,19 @@ describe('DebtsController', () => {
     pagamentos: {
       opcoes: [
         {
-          tipo: 'TOTAL',
+          tipo: PaymentType.TOTAL,
           valor_base: 0,
           pix: { total_com_desconto: 0 },
           cartao_credito: { parcelas: [] },
         },
         {
-          tipo: 'SOMENTE_IPVA',
+          tipo: PaymentType.SOMENTE_IPVA,
           valor_base: 0,
           pix: { total_com_desconto: 0 },
           cartao_credito: { parcelas: [] },
         },
         {
-          tipo: 'SOMENTE_MULTAS',
+          tipo: PaymentType.SOMENTE_MULTAS,
           valor_base: 0,
           pix: { total_com_desconto: 0 },
           cartao_credito: { parcelas: [] },
@@ -137,7 +138,7 @@ describe('DebtsController', () => {
         ...mockResponse,
         debitos: [
           {
-            tipo: 'IPVA',
+            tipo: DebtType.IPVA,
             valor_original: 1500,
             valor_atualizado: 1650,
             vencimento: '2024-01-10',
@@ -163,7 +164,7 @@ describe('DebtsController', () => {
         pagamentos: {
           opcoes: [
             {
-              tipo: 'TOTAL',
+              tipo: PaymentType.TOTAL,
               valor_base: 1500,
               pix: { total_com_desconto: 1425 },
               cartao_credito: { parcelas: [] },
@@ -187,14 +188,14 @@ describe('DebtsController', () => {
         placa: 'ABC1234',
         debitos: [
           {
-            tipo: 'IPVA',
+            tipo: DebtType.IPVA,
             valor_original: 1500,
             valor_atualizado: 1650,
             vencimento: '2024-01-10',
             dias_atraso: 120,
           },
           {
-            tipo: 'MULTA',
+            tipo: DebtType.MULTA,
             valor_original: 300.5,
             valor_atualizado: 600.5,
             vencimento: '2024-02-15',
@@ -208,19 +209,19 @@ describe('DebtsController', () => {
         pagamentos: {
           opcoes: [
             {
-              tipo: 'TOTAL',
+              tipo: PaymentType.TOTAL,
               valor_base: 2250.5,
               pix: { total_com_desconto: 2137.975 },
               cartao_credito: { parcelas: [] },
             },
             {
-              tipo: 'SOMENTE_IPVA',
+              tipo: PaymentType.SOMENTE_IPVA,
               valor_base: 1650,
               pix: { total_com_desconto: 1567.5 },
               cartao_credito: { parcelas: [] },
             },
             {
-              tipo: 'SOMENTE_MULTAS',
+              tipo: PaymentType.SOMENTE_MULTAS,
               valor_base: 600.5,
               pix: { total_com_desconto: 570.475 },
               cartao_credito: { parcelas: [] },
