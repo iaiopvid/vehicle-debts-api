@@ -4,6 +4,7 @@ import { ConsultDebtsUseCase } from '../application/use-cases/consult-debts.usec
 import { ConsultDebtsDto } from './dto/consult-debts.dto';
 import { ApiParam, ApiResponse } from '@nestjs/swagger';
 import { ConsultDebtsResponseDto } from '../application/use-cases/dto/consult-debts-response.dto';
+import { Error400ResponseDto } from '../../../shared/dto/error-400-response.dto';
 
 @Controller('debts')
 export class DebtsController {
@@ -27,8 +28,9 @@ export class DebtsController {
   @ApiResponse({
     status: 400,
     description: 'Bad Request',
+    type: Error400ResponseDto
   })
-  async consult(@Body() dto: ConsultDebtsDto) {
+  async consult(@Body() dto: ConsultDebtsDto): Promise<ConsultDebtsResponseDto> {
     return this.consultDebtsUseCase.execute(dto.placa);
   }
 }
