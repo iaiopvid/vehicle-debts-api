@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["jest", "node"],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -12,5 +13,6 @@
     "baseUrl": "./",
     "incremental": true,
     "strict": false
-  }
+  },
+  "include": ["**/*.spec.ts", "**/*.test.ts"]
 }
